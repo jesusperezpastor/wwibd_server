@@ -27,3 +27,14 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
+
+   deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install Netlify CLI
+      run: npm install netlify-cli -g
+    - name: Deploy to Netlify
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      run: netlify deploy --prod --site warm-concha-756a7d
