@@ -33,6 +33,8 @@ jobs:
     steps:
       - name: Install Netlify CLI
         run: npm install netlify-cli -g
+      - name: Build the app
+        run: npm run build
       - name: Deploy to Netlify
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
