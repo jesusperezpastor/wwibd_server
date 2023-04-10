@@ -11,10 +11,10 @@ jobs:
     name: build-and-deploy
     steps:
       - name: Download GCP Deploy action
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           repository: GoogleCloudPlatform/github-actions
-          ref: v1.1.0
+          ref: v1
           path: gcp-deploy
           submodules: 'recursive'
 
@@ -30,7 +30,7 @@ jobs:
         run: npm run build
 
       - name: Deploy to GCP
-        uses: GoogleCloudPlatform/github-actions/deploy@v1.1.0
+        uses: GoogleCloudPlatform/github-actions/deploy@v1
         with:
           credentials: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
           project_id: wwibd-server
