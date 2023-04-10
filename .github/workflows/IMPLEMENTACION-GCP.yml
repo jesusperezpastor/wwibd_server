@@ -10,7 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     name: build-and-deploy # Agregamos un identificador único para el trabajo
     steps:
-      
+      - name: Download GCP Deploy action
+        uses: actions/checkout@v2
+        with:
+          repository: GoogleCloudPlatform/github-actions
+          ref: v1.1.0
+          path: gcp-deploy
 
       - name: Set up Node.js
         uses: actions/setup-node@v2.1.5
@@ -22,13 +27,6 @@ jobs:
 
       - name: Build
         run: npm run build
-
-      - name: Download GCP Deploy action
-        uses: actions/checkout@v2
-        with:
-          repository: GoogleCloudPlatform/github-actions
-          ref: v1.1.0
-          path: gcp-deploy
 
       - name: Deploy to GCP
         uses: GoogleCloudPlatform/github-actions/deploy@v1.1.0
