@@ -20,8 +20,8 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
-      #- name: Deploy to GCP
-      #  uses: GoogleCloudPlatform/github-actions/deploy@v1.1.0
+      - name: Deploy to GCP
+        uses: GoogleCloudPlatform/github-actions/deploy@v1.1.0
       #  with:
        #   credentials: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
        #   project_id: wwibd-server
