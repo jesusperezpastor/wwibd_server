@@ -18,8 +18,8 @@ jobs:
           node-version: '12.x'
       - name: Install dependencies
         run: npm install
-      #- name: Build
-      #  run: npm run build
+      - name: Build
+        run: npm run build
       #- name: Deploy to GCP
       #  uses: GoogleCloudPlatform/github-actions/deploy@v1.1.0
       #  with:
