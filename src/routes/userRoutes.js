@@ -22,7 +22,7 @@ async function connectToDB() {
 
 //User Section
 router.post('/user/singup', async (req, res) => {
-    
+
     console.log(req.body);
     const { email, password, firstName, lastName, jobRole, city, country, phone } = req.body;
     const newUser = new User({ email, password, firstName, lastName, jobRole, city, country, phone });
@@ -55,6 +55,20 @@ router.post('/user/logout', async (req, res) => {
     console.log(token);
     invalidateToken(token);
     res.status(200).json({ message: 'Logout exitoso' });
+});
+
+
+router.get('/user/getAllUsers', async (req, res) => {
+    const token = req.headers.authorization;
+    const db = await connectToDB();
+    const users = db.collection("users");
+
+    try {
+        const allUsers = await users.find({}).toArray();
+        res.status(200).json(allUsers);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
 });
 
 function invalidateToken(token) {
@@ -106,7 +120,7 @@ router.post('/board/create', async (req, res) => {
 router.post('/board/update', async (req, res) => {
     // Recuperar el tablero enviado en el cuerpo de la petición
     const updatedBoard = req.body;
-
+    
     // Recuperar el id del tablero a actualizar
     const boardId = updatedBoard._id;
 
@@ -119,7 +133,6 @@ router.post('/board/update', async (req, res) => {
             res.status(500).json({ error: 'Error al buscar el tablero' });
             return;
         }
-        
 
         // Actualizar el tablero original con los datos enviados en la petición
         boardOriginal.name = updatedBoard.name;
@@ -128,7 +141,8 @@ router.post('/board/update', async (req, res) => {
         boardOriginal.cycleTimeStartIdList = updatedBoard.cycleTimeStartIdList;
         boardOriginal.cycleTimeEnd = updatedBoard.cycleTimeEnd;
         boardOriginal.cycleTimeEndIdList = updatedBoard.cycleTimeEndIdList;
-        
+        boardOriginal.users = updatedBoard.users;
+        console.log(boardOriginal)
         // Actualizar el tablero en la base de datos
         const result = await boards.updateOne({ _id: boardId }, { $set: boardOriginal });
 
@@ -146,6 +160,20 @@ router.get('/board/getAllProjects', async (req, res) => {
 
     try {
         const allBoards = await boards.find({}).toArray();
+        res.status(200).json(allBoards);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+router.get('/board/getAllProjectsByUser/:userEmail', async (req, res) => {
+    const token = req.headers.authorization;
+    const userEmail = req.params.userEmail;
+    const db = await connectToDB();
+    const boards = db.collection("boards");
+    console.log(userEmail);
+    try {
+        const allBoards = await boards.find({ users: userEmail }).toArray();
         res.status(200).json(allBoards);
     } catch (err) {
         res.status(500).json({ message: err.message });
