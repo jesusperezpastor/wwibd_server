@@ -12,18 +12,25 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          repository: GoogleCloudPlatform/github-actions
+          ref: v1.1.0
+
       - name: Set up Node.js
         uses: actions/setup-node@v2.1.5
         with:
           node-version: '12.x'
+
       - name: Install dependencies
         run: npm install
+
       - name: Build
         run: npm run build
+
       - name: Deploy to GCP
         uses: GoogleCloudPlatform/github-actions/deploy@v1.1.0
-      #  with:
-       #   credentials: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-       #   project_id: wwibd-server
-        #  app: wwibd-server
-       #   version: ${{ github.sha }}
+        with:
+          credentials: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+          project_id: wwibd-server
+          app: wwibd-server
+          version: ${{ github.sha }}
