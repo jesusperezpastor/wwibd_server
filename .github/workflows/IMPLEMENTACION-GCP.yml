@@ -11,7 +11,12 @@ jobs:
     name: build-and-deploy
     steps:
       - name: Download GCP Deploy action
-        uses: actions/checkout
+        uses: actions/checkout@v1
+        with:
+          repository: GoogleCloudPlatform/github-actions
+          ref: v1.1.0
+          path: gcp-deploy
+          submodules: 'recursive'
 
       - name: Set up Node.js
         uses: actions/setup-node@v2.1.5
