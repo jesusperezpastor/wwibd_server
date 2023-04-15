@@ -11,9 +11,9 @@ COPY package*.json ./
 RUN npm install
 
 # Make port 8080 available to the world outside this container
-EXPOSE 8080
+#EXPOSE 8080
 
-ENV PORT 8080
+#ENV PORT 8080
 
 COPY . .
 
