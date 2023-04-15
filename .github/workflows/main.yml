@@ -22,6 +22,7 @@ jobs:
       - name: Build and deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v0.3.0
         with:
+          service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
           service-name: server-wwibd
           image: gcr.io/${{ secrets.PROJECT_ID }}/server-wwibd
           region: us-central1
