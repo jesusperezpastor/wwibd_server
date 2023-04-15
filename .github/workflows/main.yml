@@ -12,7 +12,7 @@ jobs:
       # Checkout the code
       - name: Checkout
         uses: actions/checkout@v2
-      # Authenticate with Google Cloud
+      # Authenticate with Google Cloud 
       - name: Authenticate with Google Cloud
         uses: google-github-actions/setup-gcloud@main
         with:
