@@ -18,7 +18,7 @@ jobs:
         with:
           project_id: ${{ secrets.PROJECT_ID }}
           service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
-      # Build and deploy the app to Cloud Run 
+      # Build and deploy the app to Cloud Run
       - name: Build and deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v0.3.0
         with:
