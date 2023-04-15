@@ -1,0 +1,28 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the code
+      - name: Checkout
+        uses: actions/checkout@v2
+      # Authenticate with Google Cloud
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: ${{ secrets.PROJECT_ID }}
+          service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+      # Build and deploy the app to Cloud Run
+      - name: Build and deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@v0.3.0
+        with:
+          service-name: server-wwibd
+          image: gcr.io/${{ secrets.PROJECT_ID }}/server-wwibd
+          region: us-central1
+          platform: managed

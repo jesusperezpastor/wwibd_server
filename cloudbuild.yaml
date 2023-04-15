@@ -1,5 +1,7 @@
 steps:
-  - name: "gcr.io/cloud-builders/docker"
-    args: ["build", "-t", "gcr.io/wwibd-server/wwibd-server:latest", "."]
-  - name: "gcr.io/cloud-builders/docker"
-    args: ["push", "gcr.io/wwibd-server/wwibd-server:latest"]
+  # Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/server-wwibd/server-wwibd', '.']
+  # Push the Docker image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/server-wwibd/server-wwibd']
