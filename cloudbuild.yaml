@@ -1,24 +1,23 @@
 steps:
-  # Build the Docker image
+  # Docker Build
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/server-api/server-api-image:$COMMIT_SHA', '.']
+    args: ['build', '-t',
+           'us-central1-docker.pkg.dev/${PROJECT_ID}/my-docker-repo/wwibd-server-api-image',
+           '.']
 
-  # Push the Docker image to Container Registry
+  # Docker Push
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/server-api/server-api-image:$COMMIT_SHA']
+    args: ['push',
+           'us-central1-docker.pkg.dev/${PROJECT_ID}/my-docker-repo/wwibd-server-api-image']
 
-  # Deploy to Cloud Run
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args:
-      - 'run'
-      - 'deploy'
-      - 'server-api'
-      - '--image=gcr.io/server-api/server-api-image:$COMMIT_SHA'
-      - '--platform=managed'
-      - '--region=us-central1'
-      - '--allow-unauthenticated'
+  # Entrypoint, timeout and environment variables
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    timeout: 240s
+    args: ['compute', 'instances',
+           'create-with-container', 'my-vm-name',
+           '--container-image',
+           'us-central1-docker.pkg.dev/${PROJECT_ID}/my-docker-repo/wwibd-server-api-image']
     env:
-      - 'PORT=8080'
-
-images:
-  - 'gcr.io/server-api/server-api-image:$COMMIT_SHA'
+      - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
