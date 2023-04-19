@@ -5,7 +5,7 @@ steps:
            'us-central1-docker.pkg.dev/${PROJECT_ID}/my-docker-repo/wwibd-server-api-image',
            '.']
 
-  # Docker Push 
+  # Docker Push
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push',
            'us-central1-docker.pkg.dev/${PROJECT_ID}/my-docker-repo/wwibd-server-api-image']
