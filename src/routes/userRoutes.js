@@ -213,4 +213,9 @@ router.delete('/board/deleteBoardById/:boardId', async (req, res) => {
     }
 });
 
+router.get('/testApi', async (req, res) => {
+    console.log("Connection Ok")
+    res.status(200).json("Connection Ok");
+});
+
 module.exports = router;
